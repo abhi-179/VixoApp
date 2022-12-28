@@ -1,0 +1,202 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Template</title>
+    <style>
+        @font-face {
+            font-family: 'monteSemiBold';
+            src: url('https://github.com/google/fonts/blob/main/ofl/montserrat/Montserrat-SemiBold.ttf');
+        }
+
+        @font-face {
+            font-family: 'monteMedium';
+            src: url('https://github.com/google/fonts/blob/main/ofl/montserrat/Montserrat-Medium.ttf');
+        }
+        table {
+            width: 50%;
+            position: relative;
+            background: transparent linear-gradient(180deg, #D3F5F4 0%, #EBEBEB 100%) 0% 0% no-repeat padding-box;
+        }
+ table,
+        td{
+            padding: 5px 10px
+
+        }
+        table,
+        td,
+        tr {
+            vertical-align: top;
+            border-collapse: collapse;
+            
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: 50%;
+            position: relative;
+        }
+
+        table,
+        td,
+        tr {
+            vertical-align: top;
+            border-collapse: collapse;
+        }
+
+        * {
+            line-height: inherit;
+        }
+
+        a[x-apple-data-detectors=true] {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <table align="center">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div style="width: 99px; height: 30px; overflow: hidden; margin: 20px auto;">
+                        <img style="height: 100%; width: 100%; object-fit: fill;" src="https://pando-messaging.s3.ap-southeast-1.amazonaws.com/chat/Group 24354@2x.png" alt="">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h1
+                        style="font-size: 24px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; margin: 0; font-family: monteSemiBold;">
+                        {{.Title}}
+                    </h1>
+                    <p
+                        style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; margin: 0 0 10px 0; font-family: monteMedium; margin-bottom: 30px;">
+                        by {{.ArtistName}}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0;">
+                        Ticket Price : {{.TicketPrice}}
+                    </p>
+                </td>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: right; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0;">
+                        View Experience : {{.Viewing_experience}}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0;">
+                        {{.Language}}
+                    </p>
+                </td>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: right; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0;">
+                        Date : {{.Date}}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0 20px 0;">
+                        No. of tickets : {{.TotalTickets}}
+                    </p>
+                </td>
+                <td>
+                    <p
+                        style="font-size: 16px; text-align: right; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin: 5px 0 20px 0;">
+                        Time : {{.Time}}
+                    </p>
+                </td>
+            </tr>
+            <tr style="border-top: 1px dashed #707070; opacity: 1;">
+                <td colspan="2">
+                    <p
+                        style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; font-weight: bold; font-family: monteMedium; margin-top: 40px;">
+                        Ticket IDs :
+                    </p>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        {{range $index, $element := .TicketCode}}
+                        <li
+                            style="font-size: 16px; text-align: left; letter-spacing: 0px; color: #000000; opacity: 1; margin: 5px 0; font-family: monteMedium;">
+                             {{$element}}
+                        </li>
+                        {{end}}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href ="https://dev.message.pandotest.com/home/booking" target="_blank"
+                        style="width: 182px; height: 44px; text-decoration: none;padding: 10px 20px; background-color: #00D2CB; color: #ffffff; font-size: 16px; border: none; border-radius: 10px; font-family: monteMedium; margin: 20px 0;">
+                        View Tickets
+                </a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" >
+                    <p
+                        style="margin: 25px 0; text-align: center; font-size: 16px; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin-bottom: 30px;">
+                        Download our Mobile App
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 !important; width:50%">
+                    <div style="width: 168px; height: 51px; overflow: hidden;margin-right:20px; float: right;">
+                        <a href="">
+                            <img style="height: 100%; width: 100%; object-fit: fill;" src="https://pando-messaging.s3.ap-southeast-1.amazonaws.com/chat/play-store.png"
+                                alt="Play Store Image">
+                        </a>
+
+                    </div>
+                </td>
+                <td style="padding: 0 !important; width:50%">
+                    <div style="width: 168px; height: 51px; overflow: hidden;">
+                        <a href="">
+                            <img style="height: 100%; width: 100%; object-fit: fill;" src="https://pando-messaging.s3.ap-southeast-1.amazonaws.com/chat/app-store.png"
+                                alt="Apple Store Image">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-bottom: 10px;">
+                    <p
+                        style="margin-top: 50px; text-align: center; font-size: 16px; letter-spacing: 0px; color: #000000; opacity: 1; font-family: monteMedium; margin-bottom: 5px;">
+                        For any further assistance
+                    </p>
+                    <a href="mailto:support@vixo.com"
+                        style="text-align: center; color: #0E918C !important; text-decoration: none; font-size: 16px; font-family: monteMedium; padding: 10px 0;">
+                        support@vixo.com
+                    </a>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

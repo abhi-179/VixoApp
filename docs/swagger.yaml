@@ -1,0 +1,1636 @@
+definitions:
+  model.AcceptGroupInvitationDto:
+    properties:
+      group_id:
+        type: integer
+      type:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.AddUserToGroupDto:
+    properties:
+      admin_ids:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      user_ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  model.BackupDto:
+    properties:
+      backup_nature:
+        type: string
+      file_name:
+        type: string
+      file_size:
+        type: string
+      filehash:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - backup_nature
+    - file_name
+    - file_size
+    - filehash
+    - user_id
+    type: object
+  model.BlockedContactDto:
+    properties:
+      blockee_id:
+        type: integer
+      blocker_id:
+        type: integer
+    type: object
+  model.BookingDetailDto:
+    properties:
+      concert_id:
+        type: integer
+      total_tickets:
+        type: integer
+      user_id:
+        type: integer
+      wallet_password:
+        type: string
+    required:
+    - concert_id
+    - total_tickets
+    - wallet_password
+    type: object
+  model.CallDetailDto:
+    properties:
+      aws_url:
+        type: string
+      call_duration:
+        type: string
+      caller_id:
+        type: integer
+      end_time:
+        type: string
+      filehash:
+        type: string
+      is_audio_call:
+        type: boolean
+      is_group_call:
+        type: boolean
+      is_missed_call:
+        type: boolean
+      start_time:
+        type: string
+      user_ids:
+        items:
+          type: integer
+        type: array
+    required:
+    - caller_id
+    - filehash
+    type: object
+  model.CancelTicketDto:
+    properties:
+      concert_id:
+        type: integer
+      ticket_code:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.ChatSettingDto:
+    properties:
+      group_chat_type:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.GroupDto:
+    properties:
+      admin_ids:
+        items:
+          type: integer
+        type: array
+      group_name:
+        type: string
+      profile_pic_url:
+        type: string
+      subject_owner_id:
+        type: integer
+      subject_timestamp:
+        type: number
+      user_ids:
+        items:
+          type: integer
+        type: array
+    required:
+    - user_ids
+    type: object
+  model.ReportDto:
+    properties:
+      group_id:
+        type: integer
+      reportee_id:
+        type: integer
+      reporter_id:
+        type: integer
+    type: object
+  model.RequestTokensDto:
+    properties:
+      amount:
+        type: string
+      message:
+        type: string
+      request_status:
+        type: string
+      requested_by_user_id:
+        type: integer
+      requested_by_wallet_id:
+        type: string
+      requested_from_user_id:
+        type: integer
+      requested_from_wallet_id:
+        type: string
+    required:
+    - amount
+    - requested_by_user_id
+    - requested_by_wallet_id
+    - requested_from_user_id
+    - requested_from_wallet_id
+    type: object
+  model.SaveReviewDto:
+    properties:
+      concert_id:
+        type: integer
+      feedback:
+        type: string
+      rating:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  model.SendTicketDto:
+    properties:
+      receiver_user_id:
+        type: integer
+      sender_user_id:
+        type: integer
+      ticket_code:
+        type: string
+    type: object
+  model.SendTokenDto:
+    properties:
+      amount:
+        type: string
+      from:
+        type: string
+      password:
+        type: string
+      to:
+        type: string
+    type: object
+  model.VerifyTicketsDto:
+    properties:
+      concert_id:
+        type: integer
+      ticket_code:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.WalletReq:
+    properties:
+      password:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - user_id
+    type: object
+  model.WalletStatementDto:
+    properties:
+      end_date:
+        type: string
+      query_type:
+        type: string
+      start_date:
+        type: string
+      total_months:
+        type: string
+      wallet_id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/booking/book_ticket:
+    post:
+      consumes:
+      - application/json
+      description: book tickets
+      parameters:
+      - description: Book ticket
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/model.BookingDetailDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Book tickets
+      tags:
+      - booking service
+  /api/v1/booking/cancel_ticket:
+    post:
+      consumes:
+      - application/json
+      description: cancel ticket
+      parameters:
+      - description: cancel ticket
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/model.CancelTicketDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Cancel ticket
+      tags:
+      - booking service
+  /api/v1/booking/send_ticket:
+    post:
+      consumes:
+      - application/json
+      description: send ticket
+      parameters:
+      - description: send ticket
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/model.SendTicketDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Send ticket
+      tags:
+      - booking service
+  /api/v1/booking/verify_ticket:
+    post:
+      consumes:
+      - application/json
+      description: verify ticket
+      parameters:
+      - description: Verify ticket
+        in: body
+        name: ticket
+        required: true
+        schema:
+          $ref: '#/definitions/model.VerifyTicketsDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Verify ticket
+      tags:
+      - booking service
+  /api/v1/booking/view_tickets:
+    get:
+      consumes:
+      - application/json
+      description: view tickets
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      - description: concert_id
+        in: query
+        name: concert_id
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: View tickets
+      tags:
+      - booking service
+  /api/v1/call/delete_call_details:
+    get:
+      consumes:
+      - application/json
+      description: Delete call logs
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth Authorization: []
+      summary: Delete call logs
+      tags:
+      - call service
+  /api/v1/call/fetch_all_call_details:
+    get:
+      consumes:
+      - application/json
+      description: fetch all call logs
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth Authorization: []
+      summary: Fetch all call logs
+      tags:
+      - call service
+  /api/v1/call/fetch_missed_call_details:
+    get:
+      consumes:
+      - application/json
+      description: fetch missed call logs
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth Authorization: []
+      summary: Fetch missed call logs
+      tags:
+      - call service
+  /api/v1/call/save_call_details:
+    post:
+      consumes:
+      - application/json
+      description: save call logs
+      parameters:
+      - description: Add call
+        in: body
+        name: call
+        required: true
+        schema:
+          $ref: '#/definitions/model.CallDetailDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Save call logs
+      tags:
+      - call service
+  /api/v1/chat/fetch_blocked_contacts:
+    get:
+      consumes:
+      - application/json
+      description: FetchBlockedContactDetails
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: FetchBlockedContactDetails
+      tags:
+      - chat service
+  /api/v1/chat/fetch_blocked_users:
+    get:
+      consumes:
+      - application/json
+      description: FetchBlockedUserDetails
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: FetchBlockedUserDetails
+      tags:
+      - chat service
+  /api/v1/chat/fetch_group_chat_setting:
+    get:
+      consumes:
+      - application/json
+      description: FetchGroupChatSetting
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: FetchGroupChatSetting
+      tags:
+      - chat service
+  /api/v1/chat/fetch_wallpaper_details:
+    get:
+      consumes:
+      - application/json
+      description: FetchWallpapersDetails
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: FetchWallpapersDetails
+      tags:
+      - chat service
+  /api/v1/chat/report_chat:
+    post:
+      consumes:
+      - application/json
+      description: report chat
+      parameters:
+      - description: report chat
+        in: body
+        name: chat
+        required: true
+        schema:
+          $ref: '#/definitions/model.ReportDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: report chat
+      tags:
+      - chat service
+  /api/v1/chat/save_blocked_contacts:
+    post:
+      consumes:
+      - application/json
+      description: SaveBlockUserDetails
+      parameters:
+      - description: SaveBlockUserDetails
+        in: body
+        name: SaveBlockUserDetails
+        required: true
+        schema:
+          $ref: '#/definitions/model.BlockedContactDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: SaveBlockUserDetails
+      tags:
+      - chat service
+  /api/v1/chat/save_group_chat_setting:
+    post:
+      consumes:
+      - application/json
+      description: SaveGroupChatSetting
+      parameters:
+      - description: SaveGroupChatSetting
+        in: body
+        name: SaveGroupChatSetting
+        required: true
+        schema:
+          $ref: '#/definitions/model.ChatSettingDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: SaveGroupChatSetting
+      tags:
+      - chat service
+  /api/v1/chat/unblock_user:
+    post:
+      consumes:
+      - application/json
+      description: Unblock_user
+      parameters:
+      - description: Unblock_user
+        in: body
+        name: Unblock_user
+        required: true
+        schema:
+          $ref: '#/definitions/model.BlockedContactDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Unblock_user
+      tags:
+      - chat service
+  /api/v1/group/accept_and_decline_group_invitation:
+    post:
+      consumes:
+      - application/json
+      description: AcceptAndDeclineGroupInvitation
+      parameters:
+      - description: AcceptAndDeclineGroupInvitation
+        in: body
+        name: AcceptAndDeclineGroupInvitation
+        required: true
+        schema:
+          $ref: '#/definitions/model.AcceptGroupInvitationDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: AcceptAndDeclineGroupInvitation
+      tags:
+      - group service
+  /api/v1/group/add_users_to_group:
+    post:
+      consumes:
+      - application/json
+      description: AddUserToGroup
+      parameters:
+      - description: AddUserToGroup
+        in: body
+        name: AddUserToGroup
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddUserToGroupDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: AddUserToGroup
+      tags:
+      - group service
+  /api/v1/group/create_group:
+    post:
+      consumes:
+      - application/json
+      description: Create_Group
+      parameters:
+      - description: Create_Group
+        in: body
+        name: Create_Group
+        required: true
+        schema:
+          $ref: '#/definitions/model.GroupDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Create_Group
+      tags:
+      - group service
+  /api/v1/group/delete_group:
+    get:
+      consumes:
+      - application/json
+      description: DeleteGroup
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteGroup
+      tags:
+      - group service
+  /api/v1/group/edit_group_info:
+    post:
+      consumes:
+      - application/json
+      description: EditGroupInfo
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: new_group_name
+        in: query
+        name: new_group_name
+        required: true
+        type: string
+      - description: profile_pic_url
+        in: query
+        name: profile_pic_url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: EditGroupInfo
+      tags:
+      - group service
+  /api/v1/group/get_all_group_details_of_user:
+    get:
+      consumes:
+      - application/json
+      description: GetAllGroupDetailsOfUser
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: GetAllGroupDetailsOfUser
+      tags:
+      - group service
+  /api/v1/group/get_group_details:
+    get:
+      consumes:
+      - application/json
+      description: GetGroupDetails
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: GetGroupDetails
+      tags:
+      - group service
+  /api/v1/group/leave_group:
+    get:
+      consumes:
+      - application/json
+      description: LeaveGroup
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: LeaveGroup
+      tags:
+      - group service
+  /api/v1/group/make_admin:
+    post:
+      consumes:
+      - application/json
+      description: MakeOrRemoveAdmin
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: new_admin_id
+        in: query
+        name: new_admin_id
+        required: true
+        type: integer
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      - description: method_type
+        in: query
+        name: method_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: MakeOrRemoveAdmin
+      tags:
+      - group service
+  /api/v1/group/remove_user_from_group:
+    get:
+      consumes:
+      - application/json
+      description: RemoveUsersFromGroup
+      parameters:
+      - description: group_id
+        in: query
+        name: group_id
+        required: true
+        type: integer
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      - description: admin_id
+        in: query
+        name: admin_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: RemoveUsersFromGroup
+      tags:
+      - group service
+  /api/v1/group/search_user_in_group:
+    post:
+      consumes:
+      - multipart/form-data
+      description: SearchUsersInGroup
+      parameters:
+      - description: photo
+        in: formData
+        name: photo
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: SearchUsersInGroup
+      tags:
+      - group service
+  /api/v1/ipfs:
+    post:
+      consumes:
+      - multipart/form-data
+      description: UploadFileToIPFS
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: UploadFileToIPFS
+      tags:
+      - ipfs service
+  /api/v1/ipfs/get_backup_filehash:
+    get:
+      consumes:
+      - application/json
+      description: GetBackupFilehash
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: GetBackupFilehash
+      tags:
+      - ipfs service
+  /api/v1/ipfs/save_backup_filehash:
+    post:
+      consumes:
+      - application/json
+      description: SaveBackupFilehash
+      parameters:
+      - description: SaveBackupFilehash
+        in: body
+        name: SaveBackupFilehash
+        required: true
+        schema:
+          $ref: '#/definitions/model.BackupDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: SaveBackupFilehash
+      tags:
+      - ipfs service
+  /api/v1/review/get_overall_rating:
+    get:
+      consumes:
+      - application/json
+      description: get overall reviews
+      parameters:
+      - description: concert_id
+        in: query
+        name: concert_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Get overall reviews
+      tags:
+      - review service
+  /api/v1/review/get_review_and_feedback:
+    get:
+      consumes:
+      - application/json
+      description: get reviews and feedback
+      parameters:
+      - description: concert_id
+        in: query
+        name: concert_id
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Get reviews and feedback
+      tags:
+      - review service
+  /api/v1/review/save_review_and_feedback:
+    post:
+      consumes:
+      - application/json
+      description: save review
+      parameters:
+      - description: save review
+        in: body
+        name: review
+        required: true
+        schema:
+          $ref: '#/definitions/model.SaveReviewDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Save review
+      tags:
+      - review service
+  /api/v1/wallet/create_wallet:
+    post:
+      consumes:
+      - application/json
+      description: create wallet
+      parameters:
+      - description: create wallet
+        in: body
+        name: review
+        required: true
+        schema:
+          $ref: '#/definitions/model.WalletReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: create wallet
+      tags:
+      - wallet service
+  /api/v1/wallet/get_balance:
+    get:
+      consumes:
+      - application/json
+      description: get balance
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Get balance
+      tags:
+      - wallet service
+  /api/v1/wallet/get_recent_transactions:
+    get:
+      consumes:
+      - application/json
+      description: recent transactions
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Recent Transactions
+      tags:
+      - wallet service
+  /api/v1/wallet/get_transactions:
+    get:
+      consumes:
+      - application/json
+      description: get transactions
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Get transactions
+      tags:
+      - wallet service
+  /api/v1/wallet/get_wallet_id:
+    get:
+      consumes:
+      - application/json
+      description: get wallet id
+      parameters:
+      - description: user_id
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Get wallet id
+      tags:
+      - wallet service
+  /api/v1/wallet/reject_or_accept_request:
+    get:
+      consumes:
+      - application/json
+      description: reject/accept request
+      parameters:
+      - description: request_id
+        in: query
+        name: request_id
+        required: true
+        type: string
+      - description: request_type
+        in: query
+        name: request_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Reject/Accept request
+      tags:
+      - wallet service
+  /api/v1/wallet/request_token:
+    post:
+      consumes:
+      - application/json
+      description: request token
+      parameters:
+      - description: request token
+        in: body
+        name: token
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestTokensDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Request token
+      tags:
+      - wallet service
+  /api/v1/wallet/send_token:
+    post:
+      consumes:
+      - application/json
+      description: send token
+      parameters:
+      - description: send token
+        in: body
+        name: token
+        required: true
+        schema:
+          $ref: '#/definitions/model.SendTokenDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Send Token
+      tags:
+      - wallet service
+  /api/v1/wallet/show_own_token_requests:
+    get:
+      consumes:
+      - application/json
+      description: show own token requests
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Show own token requests
+      tags:
+      - wallet service
+  /api/v1/wallet/show_pending_requests:
+    get:
+      consumes:
+      - application/json
+      description: show pending requests
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Show pending requests
+      tags:
+      - wallet service
+  /api/v1/wallet/view_spend_analytics:
+    get:
+      consumes:
+      - application/json
+      description: view spend analytics
+      parameters:
+      - description: wallet_id
+        in: query
+        name: wallet_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: View spend analytics
+      tags:
+      - wallet service
+  /api/v1/wallet/wallet_statement:
+    post:
+      consumes:
+      - application/json
+      description: wallet statement
+      parameters:
+      - description: wallet statement
+        in: body
+        name: statement
+        required: true
+        schema:
+          $ref: '#/definitions/model.WalletStatementDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              type: string
+          schema:
+            type: object
+        "404":
+          description: Not Found
+      security:
+      - ApiKeyAuth: []
+      summary: Wallet statement
+      tags:
+      - wallet service
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
